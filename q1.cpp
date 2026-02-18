@@ -6,12 +6,16 @@ vector<int> findKilled(vector<int>&pid, vector<int>&ppid, int kill){
     queue<int> q;
     vector<int>res;
     q.push(kill);
+
+    unordered_map<int,vector<int>> mp;
+    for(int i=0;i<n;i++){
+        mp[ppid[i]].push_back(pid[i]);
+    }
     while(!q.empty()){
         int top=q.front();
         q.pop();
-        for(int i=0;i<n;i++){
-            if(ppid[i]==top)
-                q.push(pid[i]);
+        for(int ele:mp[top]){
+            q.push(ele);
         }
         res.push_back(top);
     }
